@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  att_taker: MyString
+  is_present: false
+
+two:
+  att_taker: MyString
+  is_present: false
