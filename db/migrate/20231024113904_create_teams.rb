@@ -4,8 +4,8 @@ class CreateTeams < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :main_leader_name
       t.string :sub_leader_name
-      t.references :user, null: false, foreign_key: true
-      # t.references :member, null: false, foreign_key: true
+      t.date :established_at
+      t.references :church, null: false, foreign_key: true
 
       t.timestamps
     end
