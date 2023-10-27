@@ -1,7 +1,7 @@
 class Program < ApplicationRecord
-  has_many :attendances, foreign_key: 'program_id', dependent: :destroy
   belongs_to :church
-  has_many :teams, foreign_key: 'program_id', dependent: :destroy
-  has_many :members, foreign_key: 'program_id', dependent: :destroy
+  has_and_belongs_to_many :teams, foreign_key: 'team_id', dependent: :destroy
+  has_one :attendance
+
   validates :name, :date, presence: true
 end

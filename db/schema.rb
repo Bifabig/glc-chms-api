@@ -10,25 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_24_141954) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "attendances", force: :cascade do |t|
+    t.string "name"
     t.string "att_taker"
     t.boolean "is_present"
-    t.bigint "user_id", null: false
-    t.bigint "church_id", null: false
-    t.bigint "member_id", null: false
     t.bigint "program_id", null: false
-    t.bigint "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["church_id"], name: "index_attendances_on_church_id"
-    t.index ["member_id"], name: "index_attendances_on_member_id"
     t.index ["program_id"], name: "index_attendances_on_program_id"
-    t.index ["team_id"], name: "index_attendances_on_team_id"
-    t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 
   create_table "churches", force: :cascade do |t|
@@ -43,47 +36,48 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_141954) do
 
   create_table "members", force: :cascade do |t|
     t.string "name"
-    t.string "image"
+    t.string "photo"
+    t.string "address"
+    t.text "phone_number"
     t.date "joined_at"
-    t.bigint "user_id", null: false
+    t.bigint "church_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "church_id", null: false
-    t.bigint "program_id", null: false
-    t.bigint "team_id", null: false
     t.index ["church_id"], name: "index_members_on_church_id"
-    t.index ["program_id"], name: "index_members_on_program_id"
-    t.index ["team_id"], name: "index_members_on_team_id"
-    t.index ["user_id"], name: "index_members_on_user_id"
+  end
+
+  create_table "members_teams", id: false, force: :cascade do |t|
+    t.bigint "member_id", null: false
+    t.bigint "team_id", null: false
+    t.index ["member_id", "team_id"], name: "index_members_teams_on_member_id_and_team_id"
   end
 
   create_table "programs", force: :cascade do |t|
     t.string "name"
     t.date "date"
-    t.bigint "user_id", null: false
     t.bigint "church_id", null: false
-    t.bigint "member_id", null: false
     t.bigint "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["church_id"], name: "index_programs_on_church_id"
-    t.index ["member_id"], name: "index_programs_on_member_id"
     t.index ["team_id"], name: "index_programs_on_team_id"
-    t.index ["user_id"], name: "index_programs_on_user_id"
+  end
+
+  create_table "programs_teams", id: false, force: :cascade do |t|
+    t.bigint "program_id", null: false
+    t.bigint "team_id", null: false
+    t.index ["program_id", "team_id"], name: "index_programs_teams_on_program_id_and_team_id"
   end
 
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.string "main_leader_name"
     t.string "sub_leader_name"
-    t.bigint "user_id", null: false
+    t.date "established_at"
+    t.bigint "church_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "church_id", null: false
-    t.bigint "program_id", null: false
     t.index ["church_id"], name: "index_teams_on_church_id"
-    t.index ["program_id"], name: "index_teams_on_program_id"
-    t.index ["user_id"], name: "index_teams_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -99,21 +93,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_141954) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "attendances", "churches"
-  add_foreign_key "attendances", "members"
   add_foreign_key "attendances", "programs"
-  add_foreign_key "attendances", "teams"
-  add_foreign_key "attendances", "users"
   add_foreign_key "churches", "users"
   add_foreign_key "members", "churches"
-  add_foreign_key "members", "programs"
-  add_foreign_key "members", "teams"
-  add_foreign_key "members", "users"
   add_foreign_key "programs", "churches"
-  add_foreign_key "programs", "members"
   add_foreign_key "programs", "teams"
-  add_foreign_key "programs", "users"
   add_foreign_key "teams", "churches"
-  add_foreign_key "teams", "programs"
-  add_foreign_key "teams", "users"
 end

@@ -1,8 +1,6 @@
 class Member < ApplicationRecord
-  has_many :teams, foreign_key: 'member_id', dependent: :destroy
   belongs_to :church
-  has_many :attendances, foreign_key: 'member_id', dependent: :destroy
-  has_many :programs, foreign_key: 'member_id', dependent: :destroy
+  has_and_belongs_to_many :teams, foreign_key: 'team_id', dependent: :destroy
 
-  validates :name, :image, :joined_at, presence: true
+  validates :name, :photo, :address, :phone_number, :joined_at, presence: true
 end
