@@ -13,9 +13,9 @@ class Api::V1::ProgramsController < ApplicationController
     @program = Program.new(program_params)
 
     if @program.save
-      render json: {program: @program, message: 'success'}, status: :created
+      render json: { program: @program, message: 'success' }, status: :created
     else
-      render json: {error: 'Error creating program'}, status: :unprocessable_entity
+      render json: { error: 'Error creating program' }, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class Api::V1::ProgramsController < ApplicationController
     if @program.update(program_params)
       render json: @program
     else
-      render json: {error: 'Error updating program data'}, status: :unprocessable_entity
+      render json: { error: 'Error updating program data' }, status: :unprocessable_entity
     end
   end
 

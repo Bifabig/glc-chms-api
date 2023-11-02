@@ -13,9 +13,9 @@ class Api::V1::TeamsController < ApplicationController
     @team = Team.new(team_params)
 
     if @team.save
-      render json: {team: @team, message: 'success'}, status: :created
+      render json: { team: @team, message: 'success' }, status: :created
     else
-      render json: {error: 'Error creating team'}, status: :unprocessable_entity
+      render json: { error: 'Error creating team' }, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class Api::V1::TeamsController < ApplicationController
     if @team.update(team_params)
       render json: @team
     else
-      render json: {error: 'Error updating team data'}, status: :unprocessable_entity
+      render json: { error: 'Error updating team data' }, status: :unprocessable_entity
     end
   end
 

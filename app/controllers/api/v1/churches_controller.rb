@@ -13,9 +13,9 @@ class Api::V1::ChurchesController < ApplicationController
     @church = Church.new(church_params)
 
     if @church.save
-      render json: {church: @church, message: 'success'}, status: :created
+      render json: { church: @church, message: 'success' }, status: :created
     else
-      render json: {error: 'Error creating church'}, status: :unprocessable_entity
+      render json: { error: 'Error creating church' }, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class Api::V1::ChurchesController < ApplicationController
     if @church.update(church_params)
       render json: @church
     else
-      render json: {error: 'Error updating church data'}, status: :unprocessable_entity
+      render json: { error: 'Error updating church data' }, status: :unprocessable_entity
     end
   end
 

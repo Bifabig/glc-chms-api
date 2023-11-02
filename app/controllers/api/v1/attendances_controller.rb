@@ -13,9 +13,9 @@ class Api::V1::AttendancesController < ApplicationController
     @attendance = Attendance.new(attendance_params)
 
     if @attendance.save
-      render json: {attendance: @attendance, message: 'success'}, status: :created
+      render json: { attendance: @attendance, message: 'success' }, status: :created
     else
-      render json: {error: 'Error creating attendance'}, status: :unprocessable_entity
+      render json: { error: 'Error creating attendance' }, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class Api::V1::AttendancesController < ApplicationController
     if @attendance.update(attendance_params)
       render json: @attendance
     else
-      render json: {error: 'Error updating attendance data'}, status: :unprocessable_entity
+      render json: { error: 'Error updating attendance data' }, status: :unprocessable_entity
     end
   end
 

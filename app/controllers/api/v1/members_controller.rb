@@ -13,9 +13,9 @@ class Api::V1::MembersController < ApplicationController
     @member = Member.new(member_params)
 
     if @member.save
-      render json: {member: @member, message: 'success'}, status: :created
+      render json: { member: @member, message: 'success' }, status: :created
     else
-      render json: {error: 'Error creating member'}, status: :unprocessable_entity
+      render json: { error: 'Error creating member' }, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class Api::V1::MembersController < ApplicationController
     if @member.update(member_params)
       render json: @member
     else
-      render json: {error: 'Error updating member data'}, status: :unprocessable_entity
+      render json: { error: 'Error updating member data' }, status: :unprocessable_entity
     end
   end
 
