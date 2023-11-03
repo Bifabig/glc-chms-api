@@ -9,7 +9,11 @@ Rails.application.routes.draw do
       resources :attendances, only: [:index, :show, :create, :new, :destroy]
     end
   end
-  devise_for :users
+
+  devise_for :users, controllers: {
+    sessions: 'api/v1/sessions',
+    registrations: 'api/v1/registrations'
+  }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
