@@ -12,6 +12,11 @@ church_1 = user_1.churches.create!(
   established_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25'),
   location: Faker::Address.city
 )
+church_2 = user_1.churches.create!(
+  name: Faker::Book.title,
+  established_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25'),
+  location: Faker::Address.city
+)
 
 member_1 = church_1.members.create!(
   name: Faker::Name.name,
@@ -20,8 +25,47 @@ member_1 = church_1.members.create!(
   address: Faker::Address.city,
   phone_number: Faker::PhoneNumber.cell_phone
 )
+member_2 = church_1.members.create!(
+  name: Faker::Name.name,
+  photo: "https://robohash.org/sitsequiquia.png?size=300x300&set=set1",
+  joined_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25'),
+  address: Faker::Address.city,
+  phone_number: Faker::PhoneNumber.cell_phone
+)
+member_3 = church_2.members.create!(
+  name: Faker::Name.name,
+  photo: "https://robohash.org/sitsequiquia.png?size=300x300&set=set1",
+  joined_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25'),
+  address: Faker::Address.city,
+  phone_number: Faker::PhoneNumber.cell_phone
+)
+member_4 = church_2.members.create!(
+  name: Faker::Name.name,
+  photo: "https://robohash.org/sitsequiquia.png?size=300x300&set=set1",
+  joined_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25'),
+  address: Faker::Address.city,
+  phone_number: Faker::PhoneNumber.cell_phone
+)
 
 team_1 = church_1.teams.create!(
+  name: Faker::Sports::Football.team,
+  main_leader_name: Faker::Name.name,
+  sub_leader_name: Faker::Name.name,
+  established_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25')
+)
+team_2 = church_1.teams.create!(
+  name: Faker::Sports::Football.team,
+  main_leader_name: Faker::Name.name,
+  sub_leader_name: Faker::Name.name,
+  established_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25')
+)
+team_3 = church_2.teams.create!(
+  name: Faker::Sports::Football.team,
+  main_leader_name: Faker::Name.name,
+  sub_leader_name: Faker::Name.name,
+  established_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25')
+)
+team_4 = church_2.teams.create!(
   name: Faker::Sports::Football.team,
   main_leader_name: Faker::Name.name,
   sub_leader_name: Faker::Name.name,
