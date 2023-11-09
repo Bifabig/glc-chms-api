@@ -38,6 +38,6 @@ class Api::V1::TeamsController < ApplicationController
   private
 
   def team_params
-    params.require(:team).permit(:church_id, :name, :main_leader_name, :sub_leader_name)
+    params.require(:team).permit(:church_id, :name, :main_leader_name, :sub_leader_name, :established_at)
   end
 end
