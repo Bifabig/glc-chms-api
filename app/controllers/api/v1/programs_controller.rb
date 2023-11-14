@@ -38,6 +38,6 @@ class Api::V1::ProgramsController < ApplicationController
   private
 
   def program_params
-    params.require(:program).permit(:church_id, :name, :date)
+    params.require(:program).permit(:church_id, :name, :date, :team_id)
   end
 end

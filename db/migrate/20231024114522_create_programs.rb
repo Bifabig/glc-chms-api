@@ -10,9 +10,7 @@ class CreatePrograms < ActiveRecord::Migration[7.0]
     end
 
     create_table :attendances do |t|
-      t.string :name
       t.string :att_taker
-      t.boolean :is_present
       t.references :program, null: false, foreign_key: true
 
       t.timestamps

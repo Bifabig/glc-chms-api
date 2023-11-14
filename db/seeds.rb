@@ -79,9 +79,7 @@ program_1 = church_1.programs.create!(
 )
 
 attendance_1 = program_1.create_attendance(
-  name: Faker::Name.name,
   att_taker: Faker::Name.name,
-  is_present: true
 )
 
 
