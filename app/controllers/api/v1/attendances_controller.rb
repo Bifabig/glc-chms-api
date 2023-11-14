@@ -38,6 +38,6 @@ class Api::V1::AttendancesController < ApplicationController
   private
 
   def attendance_params
-    params.require(:attendance).permit(:program_id, :name, :att_taker, :is_present)
+    params.require(:attendance).permit(:program_id, :att_taker)
   end
 end
