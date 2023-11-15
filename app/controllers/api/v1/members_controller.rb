@@ -1,6 +1,7 @@
 class Api::V1::MembersController < ApplicationController
   def index
-    @members = Member.all.order(created_at: :desc)
+    # @members = Member.all.order(created_at: :desc)
+    @member = Member.last.to_json(include: [:photo])
     render json: @members
   end
 
