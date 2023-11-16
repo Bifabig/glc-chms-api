@@ -1,8 +1,10 @@
 class Api::V1::MembersController < ApplicationController
   def index
-    # @members = Member.all.order(created_at: :desc)
-    @member = Member.last.to_json(include: [:photo])
-    render json: @members
+    @members = Member.all
+    options = {
+      include: [:teams]
+    }
+    render json: MemberSerializer.new(@members, options)
   end
 
   def show
