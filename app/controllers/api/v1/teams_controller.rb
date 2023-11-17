@@ -1,7 +1,10 @@
 class Api::V1::TeamsController < ApplicationController
   def index
     @teams = Team.all
-    render json: TeamSerializer.new(@teams)
+    options = {
+      include: [:members]
+    }
+    render json: TeamSerializer.new(@teams, options)
   end
 
   def show
