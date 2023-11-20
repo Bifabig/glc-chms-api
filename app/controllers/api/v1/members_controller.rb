@@ -2,9 +2,11 @@ class Api::V1::MembersController < ApplicationController
   def index
     @members = Member.all
     options = {
-      include: [:teams]
+      include: [:teams, :church]
     }
     render json: MemberSerializer.new(@members, options)
+    # render json: MemberSerializer.new(@members)
+    # render json: @members, include: 'teams'
   end
 
   def show
