@@ -43,6 +43,6 @@ class Api::V1::MembersController < ApplicationController
   private
 
   def member_params
-    params.require(:member).permit(:church_id, :name, :photo, :address, :phone_number, :joined_at)
+    params.require(:member).permit(:team_id, :church_id, :name, :photo, :address, :phone_number, :joined_at)
   end
 end
