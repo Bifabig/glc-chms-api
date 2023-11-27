@@ -2,11 +2,10 @@ class Api::V1::MembersController < ApplicationController
   def index
     @members = Member.all.order(created_at: :desc)
     options = {
-      include: [:teams, :church]
+      include: %i[teams church]
     }
     # serialized json api
-    render json: MemberSerializer.new(@members, options) 
-    
+    render json: MemberSerializer.new(@members, options)
   end
 
   def show
@@ -21,7 +20,7 @@ class Api::V1::MembersController < ApplicationController
 
     if @member.save
       options = {
-        include: [:teams, :church]
+        include: %i[teams church]
       }
       render json: { member: MemberSerializer.new(@member, options), message: 'success' }, status: :created
     else
