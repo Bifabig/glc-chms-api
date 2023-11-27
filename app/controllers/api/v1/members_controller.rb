@@ -1,7 +1,12 @@
 class Api::V1::MembersController < ApplicationController
   def index
     @members = Member.all.order(created_at: :desc)
-    render json: @members
+    options = {
+      include: [:teams, :church]
+    }
+    # serialized json api
+    render json: MemberSerializer.new(@members, options) 
+    
   end
 
   def show
@@ -10,10 +15,15 @@ class Api::V1::MembersController < ApplicationController
   end
 
   def create
-    @member = Member.new(member_params)
+    @member = Member.new(member_params.except(:team_id))
+
+    add_members_teams(@member, params[:member][:team_id])
 
     if @member.save
-      render json: { member: @member, message: 'success' }, status: :created
+      options = {
+        include: [:teams, :church]
+      }
+      render json: { member: MemberSerializer.new(@member, options), message: 'success' }, status: :created
     else
       render json: { error: 'Error creating member' }, status: :unprocessable_entity
     end
@@ -37,7 +47,11 @@ class Api::V1::MembersController < ApplicationController
 
   private
 
+  def add_members_teams(member, team_id)
+    member.teams << Team.find(team_id)
+  end
+
   def member_params
-    params.require(:member).permit(:church_id, :name, :photo, :address, :phone_number, :joined_at)
+    params.require(:member).permit(:team_id, :church_id, :name, :photo, :address, :phone_number, :joined_at)
   end
 end

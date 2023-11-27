@@ -1,6 +1,10 @@
 class Api::V1::TeamsController < ApplicationController
   def index
-    @teams = Team.all.order(created_at: :desc)
+    @teams = Team.all
+    # options = {
+    #   include: [:members]
+    # }
+    # render json: TeamSerializer.new(@teams, options)
     render json: @teams
   end
 
