@@ -4,7 +4,6 @@ class Api::V1::MembersController < ApplicationController
     options = {
       include: %i[teams church]
     }
-    # serialized json api
     render json: MemberSerializer.new(@members, options)
   end
 
