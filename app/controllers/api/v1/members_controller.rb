@@ -13,9 +13,9 @@ class Api::V1::MembersController < ApplicationController
   end
 
   def create
-    @member = Member.new(member_params.except(:team_id))
+    @member = Member.new(member_params.except(:teams))
 
-    add_members_teams(@member, params[:member][:team_id])
+    add_members_teams(@member, params[:member][:teams])
 
     if @member.save
       options = {
@@ -45,11 +45,14 @@ class Api::V1::MembersController < ApplicationController
 
   private
 
-  def add_members_teams(member, team_id)
-    member.teams << Team.find(team_id)
+  def add_members_teams(member, teams)
+    teams.split(',').each do |team_id|
+      team = Team.find(team_id)
+      member.teams << team
+    end
   end
 
   def member_params
-    params.require(:member).permit(:team_id, :church_id, :name, :photo, :address, :phone_number, :joined_at)
+    params.require(:member).permit(:teams, :church_id, :name, :photo, :address, :phone_number, :joined_at)
   end
 end
