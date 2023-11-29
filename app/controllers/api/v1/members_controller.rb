@@ -9,7 +9,10 @@ class Api::V1::MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-    render json: @member
+    options = {
+      include: %i[teams church]
+    }
+    render json: MemberSerializer.new(@member, options)
   end
 
   def create
