@@ -42,8 +42,17 @@ class Api::V1::MembersController < ApplicationController
 
   def destroy
     @member = Member.find(params[:id])
-    @member.destroy
-    head :no_content
+    
+    if @member.destroy
+      @members = Member.all.order(created_at: :desc)
+      options = {
+        include: %i[teams church]
+      }
+      render json: MemberSerializer.new(@members, options)
+    else
+      render json: { error: 'Error Deleting member data' }, status: :unprocessable_entity
+    end
+    
   end
 
   private
