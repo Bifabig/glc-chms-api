@@ -33,8 +33,12 @@ class Api::V1::MembersController < ApplicationController
   def update
     @member = Member.find(params[:id])
 
-    if @member.update(member_params)
-      render json: @member
+    if @member.update(member_params.except(:teams))
+      add_members_teams(@member, params[:member][:teams])
+      options = {
+        include: %i[teams church]
+      }
+      render json: { member: MemberSerializer.new(@member, options), message: 'success' }, status: :created
     else
       render json: { error: 'Error updating member data' }, status: :unprocessable_entity
     end
@@ -58,6 +62,7 @@ class Api::V1::MembersController < ApplicationController
   private
 
   def add_members_teams(member, teams)
+    member.teams.destroy_all
     teams.split(',').each do |team_id|
       team = Team.find(team_id)
       member.teams << team
