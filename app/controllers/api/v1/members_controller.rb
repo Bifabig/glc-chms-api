@@ -32,9 +32,9 @@ class Api::V1::MembersController < ApplicationController
 
   def update
     @member = Member.find(params[:id])
+    add_members_teams(@member, params[:member][:teams])
 
     if @member.update(member_params.except(:teams))
-      add_members_teams(@member, params[:member][:teams])
       options = {
         include: %i[teams church]
       }
