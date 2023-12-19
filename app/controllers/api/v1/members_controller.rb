@@ -17,8 +17,10 @@ class Api::V1::MembersController < ApplicationController
 
   def create
     @member = Member.new(member_params.except(:teams))
+    if !params[:member][:teams].empty?
+      add_members_teams(@member, params[:member][:teams])
+    end
 
-    add_members_teams(@member, params[:member][:teams])
 
     if @member.save
       options = {
