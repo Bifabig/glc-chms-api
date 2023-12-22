@@ -17,10 +17,7 @@ class Api::V1::MembersController < ApplicationController
 
   def create
     @member = Member.new(member_params.except(:teams))
-    if !params[:member][:teams].empty?
-      add_members_teams(@member, params[:member][:teams])
-    end
-
+    add_members_teams(@member, params[:member][:teams]) unless params[:member][:teams].empty?
 
     if @member.save
       options = {
@@ -48,7 +45,7 @@ class Api::V1::MembersController < ApplicationController
 
   def destroy
     @member = Member.find(params[:id])
-    
+
     if @member.destroy
       @members = Member.all.order(created_at: :desc)
       options = {
@@ -58,7 +55,6 @@ class Api::V1::MembersController < ApplicationController
     else
       render json: { error: 'Error Deleting member data' }, status: :unprocessable_entity
     end
-    
   end
 
   private
