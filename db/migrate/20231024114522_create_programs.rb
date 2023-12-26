@@ -4,7 +4,6 @@ class CreatePrograms < ActiveRecord::Migration[7.0]
       t.string :name
       t.date :date
       t.references :church, null: false, foreign_key: true
-      t.references :team, null: false, foreign_key: true
 
       t.timestamps
     end

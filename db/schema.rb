@@ -82,11 +82,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
     t.string "name"
     t.date "date"
     t.bigint "church_id", null: false
-    t.bigint "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["church_id"], name: "index_programs_on_church_id"
-    t.index ["team_id"], name: "index_programs_on_team_id"
   end
 
   create_table "programs_teams", id: false, force: :cascade do |t|
@@ -125,6 +123,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
   add_foreign_key "churches", "users"
   add_foreign_key "members", "churches"
   add_foreign_key "programs", "churches"
-  add_foreign_key "programs", "teams"
   add_foreign_key "teams", "churches"
 end
