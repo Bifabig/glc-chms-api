@@ -1,19 +1,29 @@
 class Api::V1::ProgramsController < ApplicationController
   def index
     @programs = Program.all.order(created_at: :desc)
-    render json: @programs
+    options = {
+      include: %i[teams church]
+    }
+    render json: ProgramSerializer.new(@programs, options)
   end
 
   def show
     @program = Program.find(params[:id])
-    render json: @program
+    options = {
+      include: %i[teams church]
+    }
+    render json: ProgramSerializer.new(@programs, options)
   end
 
   def create
-    @program = Program.new(program_params)
+    @program = Program.new(program_params.except(:teams))
+    add_programs_teams(@program, params[:program][:teams]) unless params[:member][:teams].empty?
 
     if @program.save
-      render json: { program: @program, message: 'success' }, status: :created
+      options = {
+        include: %i[teams church]
+      }
+      render json: { program: ProgramSerializer.new(@programs, options), message: 'success' }, status: :created
     else
       render json: { error: 'Error creating program' }, status: :unprocessable_entity
     end
@@ -37,7 +47,15 @@ class Api::V1::ProgramsController < ApplicationController
 
   private
 
+  def add_programs_teams(program, teams)
+    program.teams.destroy_all
+    teams.split(',').each do |team_id|
+      team = Team.find(team_id)
+      program.teams << team
+    end
+  end
+
   def program_params
-    params.require(:program).permit(:church_id, :name, :date, :team_id)
+    params.require(:program).permit(:teams, :church_id, :name, :date)
   end
 end
