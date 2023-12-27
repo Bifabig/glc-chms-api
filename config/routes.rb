@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       resources :members, only: [:index, :show, :create, :update, :new, :destroy]
       resources :teams, only: [:index, :show, :create, :update, :new, :destroy]
       resources :programs, only: [:index, :show, :create, :update, :new, :destroy]
-      resources :attendances, only: [:index, :show, :create, :update, :new, :destroy]
+      # resources :attendances, only: [:index, :show, :create, :update, :new, :destroy]
     end
   end
 

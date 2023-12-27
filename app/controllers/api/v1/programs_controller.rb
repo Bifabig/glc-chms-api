@@ -17,13 +17,13 @@ class Api::V1::ProgramsController < ApplicationController
 
   def create
     @program = Program.new(program_params.except(:teams))
-    add_programs_teams(@program, params[:program][:teams]) unless params[:member][:teams].empty?
+    add_programs_teams(@program, params[:program][:teams]) unless params[:program][:teams].empty?
 
     if @program.save
       options = {
         include: %i[teams church]
       }
-      render json: { program: ProgramSerializer.new(@programs, options), message: 'success' }, status: :created
+      render json: { program: ProgramSerializer.new(@program, options), message: 'success' }, status: :created
     else
       render json: { error: 'Error creating program' }, status: :unprocessable_entity
     end
