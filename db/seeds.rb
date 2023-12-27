@@ -72,16 +72,16 @@ team_4 = church_2.teams.create!(
   established_at: Faker::Date.between(from: '2008-09-23', to: '2023-09-25')
 )
 
-program_1 = church_1.programs.create!(
-  name: Faker::ProgrammingLanguage.name,
-  date: Faker::Date.between(from: '2008-09-23', to: '2023-09-25'),
-)
+# program_1 = church_1.programs.create!(
+#   name: Faker::ProgrammingLanguage.name,
+#   date: Faker::Date.between(from: '2008-09-23', to: '2023-09-25'),
+# )
 
-program_1.teams << team_1
+# program_1.teams << team_1
 
-attendance_1 = program_1.create_attendance(
-  att_taker: Faker::Name.name,
-)
+# attendance_1 = program_1.create_attendance(
+#   att_taker: Faker::Name.name,
+# )
 
 
 
