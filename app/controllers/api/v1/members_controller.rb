@@ -33,11 +33,11 @@ class Api::V1::MembersController < ApplicationController
     @member = Member.find(params[:id])
     add_members_teams(@member, params[:member][:teams])
 
-    if @member.update(member_params.except(:teams))
+    if @member.update!(member_params.except(:teams))
       options = {
         include: %i[teams church]
       }
-      render json: { member: MemberSerializer.new(@member, options), message: 'success' }, status: :created
+      render json: { member: MemberSerializer.new(@member, options), message: 'success' }, status: :ok
     else
       render json: { error: 'Error updating member data' }, status: :unprocessable_entity
     end

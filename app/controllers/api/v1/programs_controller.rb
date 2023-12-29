@@ -2,7 +2,7 @@ class Api::V1::ProgramsController < ApplicationController
   def index
     @programs = Program.all.order(created_at: :desc)
     options = {
-      include: %i[teams church]
+      include: %i[teams attendances church]
     }
     render json: ProgramSerializer.new(@programs, options)
   end
@@ -10,7 +10,7 @@ class Api::V1::ProgramsController < ApplicationController
   def show
     @program = Program.find(params[:id])
     options = {
-      include: %i[teams church]
+      include: %i[teams attendances church]
     }
     render json: ProgramSerializer.new(@programs, options)
   end
@@ -21,7 +21,7 @@ class Api::V1::ProgramsController < ApplicationController
 
     if @program.save
       options = {
-        include: %i[teams church]
+        include: %i[teams attendances church]
       }
       render json: { program: ProgramSerializer.new(@program, options), message: 'success' }, status: :created
     else
@@ -41,8 +41,12 @@ class Api::V1::ProgramsController < ApplicationController
 
   def destroy
     @program = Program.find(params[:id])
-    @program.destroy
-    head :no_content
+    if @program.destroy
+      @programs = Program.all.order(created_at: :desc)
+      render json: @programs
+    else
+      render json: { error: 'Error Deleting program data' }, status: :unprocessable_entity
+    end
   end
 
   private
@@ -56,6 +60,6 @@ class Api::V1::ProgramsController < ApplicationController
   end
 
   def program_params
-    params.require(:program).permit(:teams, :church_id, :name, :date)
+    params.require(:program).permit(:teams, :church_id, :name, :date, :attendance_taker)
   end
 end
