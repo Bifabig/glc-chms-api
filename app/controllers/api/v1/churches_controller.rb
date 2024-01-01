@@ -22,7 +22,7 @@ class Api::V1::ChurchesController < ApplicationController
   def update
     @church = Church.find(params[:id])
 
-    if @church.update(church_params)
+    if @church.update!(church_params)
       render json: @church
     else
       render json: { error: 'Error updating church data' }, status: :unprocessable_entity

@@ -43,7 +43,10 @@ class Api::V1::ProgramsController < ApplicationController
     @program = Program.find(params[:id])
     if @program.destroy
       @programs = Program.all.order(created_at: :desc)
-      render json: @programs
+      options = {
+      include: %i[teams attendances church]
+      }
+      render json: ProgramSerializer.new(@programs, options)
     else
       render json: { error: 'Error Deleting program data' }, status: :unprocessable_entity
     end
