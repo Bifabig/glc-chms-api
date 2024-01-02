@@ -12,7 +12,7 @@ class Api::V1::ProgramsController < ApplicationController
     options = {
       include: %i[teams attendances church]
     }
-    render json: ProgramSerializer.new(@programs, options)
+    render json: ProgramSerializer.new(@program, options)
   end
 
   def create
@@ -31,9 +31,13 @@ class Api::V1::ProgramsController < ApplicationController
 
   def update
     @program = Program.find(params[:id])
+    add_programs_teams(@program, params[:program][:teams])
 
-    if @program.update(program_params)
-      render json: @program
+    if @program.update(program_params.except(:teams))
+      options = {
+        include: %i[teams attendances church]
+      }
+      render json: { program: ProgramSerializer.new(@program, options), message: 'success' }, status: :ok
     else
       render json: { error: 'Error updating program data' }, status: :unprocessable_entity
     end
