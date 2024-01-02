@@ -44,7 +44,7 @@ class Api::V1::ProgramsController < ApplicationController
     if @program.destroy
       @programs = Program.all.order(created_at: :desc)
       options = {
-      include: %i[teams attendances church]
+        include: %i[teams attendances church]
       }
       render json: ProgramSerializer.new(@programs, options)
     else
