@@ -1,7 +1,10 @@
 class Api::V1::AttendancesController < ApplicationController
   def index
     @attendances = Attendance.all.order(created_at: :desc)
-    render json: @attendances
+    options = {
+      include: %i[program]
+    }
+    render json: { attendance: AttendanceSerializer.new(@attendances, options), message: 'success' }
   end
 
   def show
@@ -10,10 +13,18 @@ class Api::V1::AttendancesController < ApplicationController
   end
 
   def create
+    existing_attendance = Attendance.find_by(attendance_params) # Find existing record based on given params
+
+    if existing_attendance
+      existing_attendance.destroy # Destroy if found
+    end
     @attendance = Attendance.new(attendance_params)
 
     if @attendance.save
-      render json: { attendance: @attendance, message: 'success' }, status: :created
+      options = {
+        include: %i[program]
+      }
+      render json: { attendance: AttendanceSerializer.new(@attendance, options), message: 'success' }, status: :created
     else
       render json: { error: 'Error creating attendance' }, status: :unprocessable_entity
     end
