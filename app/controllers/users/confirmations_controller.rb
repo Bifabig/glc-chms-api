@@ -1,20 +1,19 @@
 class Users::ConfirmationsController < Devise::ConfirmationsController
-  def new
-  end
+  def new; end
 
   def create
     @user = User.find_by(email: params[:email])
     if @user
-      unless @user.confirmed?
-        @user.resend_confirmation_instructions
-        render json: {
-          message: 'We have sent you an email with the confirmation link'
-        },
-        status: :ok
-      else
+      if @user.confirmed?
         render json: {
           message: 'Email was already confirmed.'
         }
+      else
+        @user.resend_confirmation_instructions
+        render json: {
+                 message: 'We have sent you an email with the confirmation link'
+               },
+               status: :ok
       end
     else
       render json: {
