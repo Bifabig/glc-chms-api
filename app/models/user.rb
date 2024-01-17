@@ -12,5 +12,5 @@ class User < ApplicationRecord
   #       :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
   # has_many :churches, foreign_key: 'user_id', dependent: :destroy
-  validates :email, :password, presence: true
+  # validates :email, :password, presence: true
 end
