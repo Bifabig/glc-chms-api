@@ -10,7 +10,7 @@ class Users::SessionsController < Devise::SessionsController
       data: UserSerializer.new(resource).serializable_hash[:data][:attributes]
     }, status: :ok
   end
-  
+
   def respond_to_on_destroy
     if current_user
       render json: {
