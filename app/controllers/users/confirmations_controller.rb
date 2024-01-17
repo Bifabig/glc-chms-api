@@ -25,7 +25,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   def show
     @user = resource_class.confirm_by_token(params[:confirmation_token])
 
-    if @user.errors.empty?
+    if @user.valid?
       render json: {
         message: 'Your account has been confirmed. You can now login'
       }, status: :ok
