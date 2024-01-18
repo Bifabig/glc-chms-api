@@ -43,7 +43,7 @@ class Users::PasswordsController < Devise::PasswordsController
 
   def respond_with(resource, _opts = {})
     @user = User.find_by(email: params[:email])
-    if @user.send_reset_password_instructions()
+    if @user.send_reset_password_instructions
       render json: {
         status: { code: 200, message: 'Password reset instructions sent successfully.' },
         user: @user
