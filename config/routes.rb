@@ -18,10 +18,13 @@ Rails.application.routes.draw do
   controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
-    confirmations: 'users/confirmations'
+    confirmations: 'users/confirmations',
+    passwords: 'users/passwords'
   }
 
   get '/current_user', to: 'current_user#index'
+
+
   # devise_for :users, controllers: {
   #   sessions: 'api/v1/sessions',
   #   registrations: 'api/v1/registrations'
