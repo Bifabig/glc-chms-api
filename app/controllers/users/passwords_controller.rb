@@ -61,14 +61,14 @@ class Users::PasswordsController < Devise::PasswordsController
     if @user.present?
       if @user.reset_password(params[:password], params[:password_confirmation])
         render json: {
-          status: { code: 200, message: 'Your password is reset. You can now login' },
+          status: { code: 200, message: 'Your password is reset. You can now login' }
         }, status: :ok
       else
         render json: {
-        status: { code: 422,
-                  message: "password is reset failed.
+          status: { code: 422,
+                    message: "password is reset failed.
         #{@user.errors.full_messages.to_sentence}" }
-      }, status: :unprocessable_entity
+        }, status: :unprocessable_entity
       end
     else
       render json: {
