@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_18_103034) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,7 +43,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
   end
 
   create_table "attendances", force: :cascade do |t|
-    t.string "att_taker"
+    t.string "member_name"
+    t.string "status"
+    t.string "remark"
     t.bigint "program_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -80,13 +82,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
 
   create_table "programs", force: :cascade do |t|
     t.string "name"
+    t.string "attendance_taker"
     t.date "date"
     t.bigint "church_id", null: false
-    t.bigint "team_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["church_id"], name: "index_programs_on_church_id"
-    t.index ["team_id"], name: "index_programs_on_team_id"
   end
 
   create_table "programs_teams", id: false, force: :cascade do |t|
@@ -107,7 +108,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "email", default: "", null: false
@@ -115,7 +115,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
+    t.string "jti", null: false
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -125,6 +132,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_142513) do
   add_foreign_key "churches", "users"
   add_foreign_key "members", "churches"
   add_foreign_key "programs", "churches"
-  add_foreign_key "programs", "teams"
   add_foreign_key "teams", "churches"
 end

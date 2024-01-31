@@ -22,7 +22,7 @@ class Api::V1::ChurchesController < ApplicationController
   def update
     @church = Church.find(params[:id])
 
-    if @church.update(church_params)
+    if @church.update!(church_params)
       render json: @church
     else
       render json: { error: 'Error updating church data' }, status: :unprocessable_entity
@@ -31,8 +31,12 @@ class Api::V1::ChurchesController < ApplicationController
 
   def destroy
     @church = Church.find(params[:id])
-    @church.destroy
-    head :no_content
+    if @church.destroy
+      @churches = Church.all.order(created_at: :desc)
+      render json: @churches
+    else
+      render json: { error: 'Error Deleting church data' }, status: :unprocessable_entity
+    end
   end
 
   private

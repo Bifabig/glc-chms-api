@@ -35,8 +35,12 @@ class Api::V1::TeamsController < ApplicationController
 
   def destroy
     @team = Team.find(params[:id])
-    @team.destroy
-    head :no_content
+    if @team.destroy
+      @teams = Team.all.order(created_at: :desc)
+      render json: @teams
+    else
+      render json: { error: 'Error Deleting team data' }, status: :unprocessable_entity
+    end
   end
 
   private
