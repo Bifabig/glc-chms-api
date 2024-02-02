@@ -1,4 +1,6 @@
 class Api::V1::ChurchesController < ApplicationController
+  before_action :authenticate_user!
+  
   def index
     @churches = Church.all.order(created_at: :desc)
     render json: @churches
