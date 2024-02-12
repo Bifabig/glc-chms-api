@@ -1,6 +1,6 @@
 class Api::V1::TeamsController < ApplicationController
   before_action :authenticate_user!
-  
+
   def index
     @teams = Team.all
     # options = {

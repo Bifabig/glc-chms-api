@@ -1,6 +1,6 @@
 class Api::V1::AttendancesController < ApplicationController
   before_action :authenticate_user!
-  
+
   def index
     @attendances = Attendance.all.order(created_at: :desc)
     options = {
