@@ -1,4 +1,6 @@
 class Api::V1::MembersController < ApplicationController
+  before_action :authenticate_user!
+
   def index
     @members = Member.all.order(created_at: :desc)
     options = {
